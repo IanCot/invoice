@@ -31,12 +31,20 @@ final class Money {
     {
         return $this->amount;
     }
+    public function getFormatedAmount():string
+    {
+        return $this->format();
+    }
     public function __toString():string
     {
-        return sprintf('%s zł',number_format($this->amount/100 , 2, ',', ' '));
+        return $this->format();
     }
     public function equals(self $other):bool
     {
         return $this->amount === $other->amount;
+    }
+    private function format():string
+    {
+        return sprintf('%s zł',number_format($this->amount/100 , 2, ',', ' '));
     }
 }

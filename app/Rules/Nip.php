@@ -25,7 +25,7 @@ class Nip implements Rule
      */
     public function passes($attribute, $value)
     {
-        if(preg_match('/^[0-9]{10}$/',$value)){
+        if(preg_match('/^[0-9]{10}$/',$value) == false){
             return false;
         }
         $digits = str_split($value);

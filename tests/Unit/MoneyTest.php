@@ -53,4 +53,9 @@ class MoneyTest extends TestCase
         $money = Money::createFromString("23.00");
         $this->assertSame(2300,$money->getAmount());
     }
+    public function test_money_can_return_formated_string():void
+    {
+        $money = Money::createFromString("230,89 zł");
+        $this->assertSame("230,89 zł",$money->getFormatedAmount());
+    }
 }

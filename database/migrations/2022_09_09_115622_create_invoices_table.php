@@ -16,7 +16,7 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('invoice_no',32)->comment("Numer Faktury");
+            $table->string('invoice_no',32)->unique()->comment("Numer Faktury");
             $table->string('seller_nip',10)->comment("Numer Nip Sprzedawcy");
             $table->string('buyer_nip',10)->comment("Numer Nip Kupującego");
             $table->string('product',254)->commnet("Nazwa produktu");

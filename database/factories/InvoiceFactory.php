@@ -14,10 +14,10 @@ class InvoiceFactory extends Factory
     public function definition()
     {
         return [
-            'invoice_no' => $this->faker->numerify('F/####'),
+            'invoice_no' => $this->faker->unique()->numerify('F/####'),
             'seller_nip' =>$this->faker->taxpayerIdentificationNumber(),
             'buyer_nip' =>$this->faker->taxpayerIdentificationNumber(),
-            'product' =>  $this->faker->word(3,true),
+            'product' =>  $this->faker->words(3,true),
             'amount' => $this->faker->numberBetween(100,1000000),
         ];
     }

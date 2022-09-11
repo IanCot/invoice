@@ -29,7 +29,7 @@ class UpdateInvoiceRequest extends FormRequest
             'seller_nip' => new Nip(),
             'buyer_nip' => new Nip(),
             'product' => ['required', 'string', 'max:255','not_regex:/^[\p{Cyrillic}\p{Common}]+$/u'],
-            'amount' => ['require','numeric']
+            'amount' => 'required'
         ];
     }
 }

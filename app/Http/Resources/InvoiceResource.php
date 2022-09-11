@@ -20,7 +20,9 @@ class InvoiceResource extends JsonResource
             'seller_nip'=>$this->seller_nip,
             'buyer_nip' => $this->buyer_nip,
             'product'=>$this->product,
-            'amount'=>$this->amount,
+            'amount'=>$this->amount->getFormatedAmount(),
+            'created_at'=>$this->created_at->format('Y-m-d'),
+            'updated_at'=>$this->updated_at->format('Y-m-d'),
         ];
     }
 }
