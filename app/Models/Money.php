@@ -10,28 +10,28 @@ final class Money {
     public function __construct(int $amount)
     {
         if($amount < 0){
-            throw new InvalidMoneyAmountException("Amount should be a positive value: {$amount}.");
+            throw new InvalidMoneyAmountException("Kwota faktury nie moze być  ujemna {$amount}.");
         }
         $this->amount = $amount;
     }
-    public static function createFromFloat(float $amount):self
+    public static function fromFloat(float $amount):self
     {
         return new self(intval($amount*100));
     }
-    public static function createFromInt(int $amount):self
+    public static function fromInt(int $amount):self
     {
         return new self($amount);
     }
-    public static function createFromString(string $amount):self
+    public static function fromString(string $amount):self
     {
-        $amount = preg_replace(['/,/i','/[zł]/','/\s/' ],['.','',''],$amount);
+        $amount = preg_replace(['/,/i','/[^\d.]/'],['.',''],$amount);
         return new self(intval($amount * 100));
     }
     public function getAmount():int
     {
         return $this->amount;
     }
-    public function getFormatedAmount():string
+    public function getFormated():string
     {
         return $this->format();
     }

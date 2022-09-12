@@ -9,13 +9,6 @@ body {
     place-items: center;
     flex-direction: column;
 }
-header.container__form{
-    display: flex;
-    align-items: center;
-    align-content: flex-start;
-    width: 100%;
-    justify-content: space-evenly;
-}
 .flex .place-content-end{
     place-content: end;
 }
@@ -25,3 +18,50 @@ header.container__form{
 .flex .direction-column{
     flex-direction: column;
 }
+
+.invoice__table {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .table__row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.5em;
+    border-bottom: 1px solid #666;
+  }
+  
+  .table__row:first-of-type {
+    font-weight: 700;
+    border-bottom: 2px solid black;
+    background-color: #dfdfdf;
+  }
+  .table__row:nth-of-type(2n) {
+    background-color: #efefef;
+  }
+  .table__col {
+    padding: 0.1rem;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .table__col:last-of-type {
+    padding: 0.1rem;
+    border-bottom: none;
+  }
+  
+  @media screen and (min-width: 600px) {
+    .invoice__table{
+        text-align: left;
+    }
+    .table__row {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      background-color: #fff;
+    }
+   
+    .table__col {
+      border: none;
+    }
+  }

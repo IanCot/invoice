@@ -1,10 +1,7 @@
 <template>
-  <!-- <dialog class="modal" id="createInvoice" open> -->
+<dialog id="createInvoice" open>
   <div class="flex container__form p-6">
-    <header class="container__form">
     <h2>Dodawanie Faktury</h2>
-    <button class="btn btn-danger">zamknij</button>
-  </header>
     <div v-if="errors">
       <div v-for="(v, k) in errors" :key="k" class="bg-warning  text-white rounded  my-4 shadow-lg py-2 px-4 pr-0 text-center">
         <p v-for="error in v" :key="error" class="text-sm">
@@ -16,37 +13,44 @@
     <div class="mb-3">
     <label for="invoice_no" class="form-label">Numer faktury</label>
     <input type="text" class="form-control" id="invoice_no" aria-describedby="invoice_noHelp" required 
-    v-model="form.invoice_no">
+    v-model="form.invoice_no" placeholder="Numer faktury">
     <div id="invoice_noHelp" class="form-text">Prosze podać numer faktury</div>
+  </div>
+  <div class="mb-3">
+    <label for="date_of_issue" class="form-label">Data wystawienia faktury</label>
+    <input type="date" class="form-control" id="date_of_issue" aria-describedby="date_of_issueHelp" required 
+    v-model="form.date_of_issue" placeholder="Numer faktury">
+    <div id="date_of_issueHelp" class="form-text">Prosze wybrać datę wystawienia faktury</div>
   </div>
   <div class="mb-3">
     <label for="seller_nip" class="form-label">Nip Sprzedawcy</label>
     <input type="text" class="form-control" id="seller_nip" aria-describedby="seller_nipHelp" required 
-    v-model="form.seller_nip">
-    <div id="seller_nipHelp" class="form-text">Prosze  podać NIP składajacy się z samych cyfr bez znaków "-","/"," "</div>
+    v-model="form.seller_nip"  placeholder="Nip Sprzedawcy">
+    <div id="seller_nipHelp" class="form-text">Numer Nip może oprócz cyfr zawierać znaki "-"," "</div>
   </div>
   <div class="mb-3">
     <label for="buyer_nip" class="form-label">Nip Nabywcy</label>
     <input type="text" class="form-control" id="buyer_nip" aria-describedby="buyer_nipHelp" required 
-    v-model="form.buyer_nip">
-    <div id="buyer_nipHelp" class="form-text">Prosze  podać NIP składajacy się z samych cyfr bez znaków "-","/"," "</div>
+    v-model="form.buyer_nip" placeholder="Nip Nabywcy">
+    <div id="buyer_nipHelp" class="form-text">Numer Nip może oprócz cyfr zawierać znaki "-"," "</div>
   </div>
   <div class="mb-3">
     <label for="product" class="form-label">Nazwa Produktu</label>
     <input type="text" class="form-control" id="product" aria-describedby="productHelp" required 
-    v-model="form.product">
+    v-model="form.product" placeholder="Nazwa Produktu">
     <div id="productHelp" class="form-text">Prosze  podać nazwę nie dłuższą niż 255 znaków</div>
   </div>
   <div class="mb-3">
-    <label for="amount" class="form-label">Nazwa Produktu</label>
+    <label for="amount" class="form-label">Kwota netto</label>
     <input type="text" class="form-control" id="amount" aria-describedby="amountHelp" required  
-    v-model="form.amount">
-    <div id="amountHelp" class="form-text">Prosze  podać kwotę nett</div>
+    v-model="form.amount" placeholder="Kwota netto w PLN">
+    <div id="amountHelp" class="form-text">Prosze  podać kwotę netto w PLN</div>
   </div>
-  <button type="submit" class="btn btn-success">Zapis</button>
+  <button type="submit" class="btn btn-success mx-1">Zapis</button>
+  <button @click="closeDialog()" class="btn btn-danger mx-1">zamknij</button>
   </form>
 </div>
-<!-- </dialog> -->
+</dialog> 
 </template>
 <script>
 import { reactive } from "vue";
@@ -55,6 +59,7 @@ export default {
   setup(){
     const form = reactive({
             'invoice_no': '',
+            'date_of_issue':'',
             'seller_nip': '',
             'buyer_nip': '',
             'product': '',
@@ -64,10 +69,17 @@ export default {
     const saveInvoice = async ()=>{
       await storeInvoice({...form})
     }
+    const closeDialog = ()=>{
+     
+      const dialog = document.querySelector('#createInvoice');
+            dialog.close();
+        
+    }
     return {
       form,
       errors,
-      saveInvoice
+      saveInvoice,
+      closeDialog
     }
   }
 }

@@ -17,15 +17,14 @@ class CreateInvoicesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('invoice_no',32)->unique()->comment("Numer Faktury");
+            $table->date('date_of_issue')->comment("Data wystawienia faktury");
             $table->string('seller_nip',10)->comment("Numer Nip Sprzedawcy");
             $table->string('buyer_nip',10)->comment("Numer Nip Kupującego");
             $table->string('product',254)->commnet("Nazwa produktu");
             $table->integer('amount')->unsigned()->comment("Kwota netto zapisana  jako integer");
 
             $table->index('invoice_no');
-            $table->index('seller_nip');
-            $table->index('buyer_nip');
-            
+           
             $table->charset = 'utf8';
             $table->collation = 'utf8_polish_ci';
         });

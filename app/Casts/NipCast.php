@@ -2,10 +2,11 @@
 
 namespace App\Casts;
 
-use App\Models\Money;
+use App\Models\Nip;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use InvalidArgumentException;
 
-class MoneyCast implements CastsAttributes
+class NipCast implements CastsAttributes
 {
     /**
      * Cast the given value.
@@ -21,8 +22,10 @@ class MoneyCast implements CastsAttributes
         if (is_null($value)) {
             return null;
         }
-        $value = Money::fromInt($value);
-        if($value instanceof Money){
+        if(is_string($value)){
+            return Nip::fromString($value);
+        }
+        if($value instanceof Nip){
             return $value;
         }
     }
@@ -38,20 +41,12 @@ class MoneyCast implements CastsAttributes
      */
     public function set($model, string $key, $value, array $attributes)
     {
-        if(is_int($value)){
-            $value = Money::fromInt($value);
-        }
         if(is_string($value)){
-            $value = Money::fromString($value);
+            $value =  Nip::fromString($value);
         }
-        if(is_float($value)){
-            $value = Money::fromFloat($value);
+        if(! $value instanceof Nip){
+             throw new InvalidArgumentException();
         }
-        if (! $value instanceof Money) {
-            throw new \InvalidArgumentException(
-                "The given value is not an Money instance",
-            );
-        }
-        return $value->getAmount();
+        return $value->getNip();
     }
 }

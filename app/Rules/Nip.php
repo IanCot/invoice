@@ -25,10 +25,11 @@ class Nip implements Rule
      */
     public function passes($attribute, $value)
     {
-        if(preg_match('/^[0-9]{10}$/',$value) == false){
+        $nip = preg_replace(["/-/",'/\s/'],["",""],$value);
+        if(preg_match('/^[0-9]{10}$/',$nip) == false){
             return false;
         }
-        $digits = str_split($value);
+        $digits = str_split($nip);
         $checksum = (
             6*intval($digits[0]) + 
             5*intval($digits[1]) + 

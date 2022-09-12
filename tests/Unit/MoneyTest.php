@@ -44,18 +44,47 @@ class MoneyTest extends TestCase
     }
     public function test_money_can_be_created_from_float():void
     {
-        $money = Money::createFromFloat(23.00);
+        $money = Money::fromFloat(23.00);
 
         $this->assertSame(2300,$money->getAmount());
     }
-    public function test_money_can_be_created_from_string():void
+    /**
+     * @dataProvider validStringMoneyProvider
+     */
+    public function test_money_can_be_created_from_string(string $amount,int $expected):void
     {
-        $money = Money::createFromString("23.00");
-        $this->assertSame(2300,$money->getAmount());
+        $money = Money::fromString($amount);
+        $this->assertSame($expected,$money->getAmount());
     }
     public function test_money_can_return_formated_string():void
     {
-        $money = Money::createFromString("230,89 zł");
-        $this->assertSame("230,89 zł",$money->getFormatedAmount());
+        $money = Money::fromString("230,89 zł");
+        $this->assertSame("230,89 zł",$money->getFormated());
+    }
+    public function validStringMoneyProvider():array
+    {
+        return [
+            ['23.00',2300],
+            ['23,00',2300],
+            ['23,00 zł',2300],
+            ['23.0',2300],
+            ['23,0',2300],
+            ['23,0 zł',2300],
+            ['23.7',2370],
+            ['23,7',2370],
+            ['23,7 zł',2370],
+            ['1100',110000],
+            ['1100',110000],
+            ['1 100',110000],
+            ['1100,00',110000],
+            ['1 100,00',110000],
+            ['1100.00',110000],
+            ['1 100.00',110000],
+            ['1100zł',110000],
+            ['1100 zł',110000],
+            ['1 100 zł',110000],
+            ['1 100,00 zł',110000],
+            ['1 100.00 zł',110000]
+        ];
     }
 }

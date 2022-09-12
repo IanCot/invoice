@@ -25,7 +25,8 @@ class UpdateInvoiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'invoice_no' => 'required',
+            'invoice_no' => "required|unique:invoices,invoice_no,{$this->invoice->id}|max:32",
+            'date_of_issue'=>'required|date',
             'seller_nip' => new Nip(),
             'buyer_nip' => new Nip(),
             'product' => ['required', 'string', 'max:255','not_regex:/^[\p{Cyrillic}\p{Common}]+$/u'],

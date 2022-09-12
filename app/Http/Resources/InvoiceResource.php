@@ -17,11 +17,11 @@ class InvoiceResource extends JsonResource
         return [
             'id'=>$this->id,
             'invoice_no'=>$this->invoice_no,
-            'seller_nip'=>$this->seller_nip,
-            'buyer_nip' => $this->buyer_nip,
+            'seller_nip'=>$this->seller_nip->getFormated(),
+            'buyer_nip' => $this->buyer_nip->getFormated(),
             'product'=>$this->product,
-            'amount'=>$this->amount->getFormatedAmount(),
-            'created_at'=>$this->created_at->format('Y-m-d'),
+            'amount'=>$this->amount->getFormated(),
+            'date_of_issue'=>$this->date_of_issue->format('Y-m-d'),
             'updated_at'=>$this->updated_at->format('Y-m-d'),
         ];
     }

@@ -15,6 +15,7 @@ class InvoiceFactory extends Factory
     {
         return [
             'invoice_no' => $this->faker->unique()->numerify('F/####'),
+            'date_of_issue'=>$this->faker->dateTimeBetween('- 1 years','now'),
             'seller_nip' =>$this->faker->taxpayerIdentificationNumber(),
             'buyer_nip' =>$this->faker->taxpayerIdentificationNumber(),
             'product' =>  $this->faker->words(3,true),
