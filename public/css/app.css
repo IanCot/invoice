@@ -20,6 +20,7 @@ body {
 }
 
 .invoice__table {
+    --bg-color:#efefef;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -30,20 +31,22 @@ body {
     flex-direction: column;
     gap: 0.1rem;
     padding: 0.5em;
-    border-bottom: 1px solid #666;
+    border-bottom:  1px solid #666666;
+    background-color: var(--bg-color);
+   
   }
   
   .table__row:first-of-type {
-    font-weight: 700;
+    --bg-color:#dfdfdf;
     border-bottom: 2px solid black;
-    background-color: #dfdfdf;
+    font-weight: 700;
   }
   .table__row:nth-of-type(2n) {
-    background-color: #efefef;
+    --bg-color:#ffffff;
   }
   .table__col {
     padding: 0.1rem;
-    border-bottom: 1px solid #ddd;
+    border-bottom:1px solid #dddddd;
   }
   
   .table__col:last-of-type {
@@ -58,7 +61,7 @@ body {
     .table__row {
       display: grid;
       grid-template-columns: repeat(8, 1fr);
-      background-color: #fff;
+      
     }
    
     .table__col {
