@@ -27,8 +27,9 @@ export default function useInvoices() {
     const storeInvoice = async (data)=>{
       errors.value='';
       try {
-        await axios.post('/api/invoices',data)
-        await router.push({name:'invoices.index'})
+        await axios.post('/api/invoices',data).then(function (res) {
+          window.location.reload();
+        })
       } catch (e) {
         if (e.response.status === 422) {
           errors.value = e.response.data.errors
@@ -39,8 +40,9 @@ export default function useInvoices() {
     const updateInvoice = async (id)=>{
       errors.value='';
       try {
-        await axios.put('/api/invoices/'+id,invoice.value)
-        await router.push({name:'invoices.index'})
+        await axios.put('/api/invoices/'+id,invoice.value).then(function (res) {
+          window.location.reload();
+        })
       } catch (e) {
         if (e.response.status === 422) {
           errors.value = e.response.data.errors

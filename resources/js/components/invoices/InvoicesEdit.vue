@@ -1,10 +1,5 @@
 <template>
-    <!-- <dialog class="modal" id="updateInvoice" open> -->
-    <div class="flex container__form p-6">
-      <header class="container__form">
-      <h2>Edycja Faktury</h2>
-      <button class="btn btn-danger">zamknij</button>
-    </header>
+    <div class="flex container__form p-1">
       <div v-if="errors">
         <div v-for="(v, k) in errors" :key="k" class="bg-warning  text-white rounded  my-4 shadow-lg py-2 px-4 pr-0 text-center">
           <p v-for="error in v" :key="error" class="text-sm">
@@ -12,7 +7,7 @@
           </p>
         </div>
     </div>
-    <form class="col-8" @submit.prevent="saveInvoice">
+    <form class="col-10" @submit.prevent="saveInvoice">
       <div class="mb-3">
       <label for="invoice_no" class="form-label">Numer faktury</label>
       <input type="text" class="form-control" id="invoice_no" aria-describedby="invoice_noHelp" required 
@@ -49,10 +44,9 @@
       v-model="invoice.amount">
       <div id="amountHelp" class="form-text">Prosze  podać kwotę netto w PLN</div>
     </div>
-    <button type="submit" class="btn btn-success">Zapis</button>
+    <button type="submit" class="btn btn-success">Zapisz zmiany</button>
     </form>
   </div>
-  <!-- </dialog> -->
   </template>
 <script>
     import useInvoices from '../../composable/invoices';

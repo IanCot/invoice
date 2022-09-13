@@ -1,11 +1,27 @@
 <template>
-    <!-- <teleport to="body">
-      <invoices-create></invoices-create>
-    </teleport>   -->
+
+<Teleport to="body">
+  <!-- use the modal component, pass in the prop -->
+  <modal :show="showModal" @close="showModal = false">
+    <template #header>
+      <h3>Dodawanie Faktury</h3>
+    </template>
+    <template #body > 
+        <invoices-create @close="showModal = false"></invoices-create>
+    </template>
+  </modal>
+</Teleport>
+<teleport to="body">
+    <edit-modal  :show="showEditNodal" @closeEdit="showEditNodal = false">
+        <template #header><h3>Edycja Faktury</h3></template>
+        <template #body> 
+            <invoices-edit :id=itemId></invoices-edit>
+        </template>
+    </edit-modal>
+</teleport>
     <div class="flex place-content-end mb-4">
             <div class="px-4 py-2">
-                <!-- <button @click="openCreateInvoice()" class="btn btn-success">Dodaj fakturę</button> -->
-                <router-link :to="{ name: 'invoices.create' }" class="btn btn-primary">Create company</router-link>
+            <button @click="showModal = true" class="btn btn-success">Dodaj fakturę</button>
             </div>
         </div>
 <div class="invoice__table">
@@ -29,8 +45,8 @@
             <div class="table__col">{{item.date_of_issue}}</div>
             <div class="table__col">{{item.updated_at}}</div>
             <div class="table__col">
-                <router-link :to="{ name: 'invoices.edit', params: { id: item.id } }" class="btn btn-primary mx-1">edycja</router-link>
-                <button  @click="deleteInvoice(item.id)"  class="btn btn-danger mx-1">usuń</button>
+                <button class="btn btn-primary m-1" @click="showEditNodal=true , itemId=item.id">Edytuj</button>
+                <button  @click="deleteInvoice(item.id)"  class="btn btn-danger m-1">Usuń</button>       
             </div>
         </div>
         </template>
@@ -43,18 +59,30 @@
 </template>
 <script>
     import useInvoices from '../../composable/invoices';
-    // import InvoicesCreate from './InvoicesCreate.vue';
-    // import InvoicesEdit from './InvoicesEdit.vue';
-
+    import Modal from './Modal.vue';
+    import EditModal from './EditModal.vue'
+    import InvoicesCreate from './InvoicesCreate.vue';
+    import InvoicesEdit from './InvoicesEdit.vue';
+    
     import { onMounted } from 'vue';
     export default {
-        // components:{
-        //     InvoicesCreate,
-        //     InvoicesEdit
-        // },
+        components:{
+            Modal,
+            EditModal,
+            InvoicesCreate,
+            InvoicesEdit
+        },
+        data() {
+                return {
+                showModal: false,
+                showEditNodal: false,
+                itemId:null
+                }
+         },
         setup(){
             const {invoices,pagination , getInvoices,getInvoicesByPage,destroyInvoice} = useInvoices()
             onMounted(getInvoices);
+          
             const deleteInvoice = async (id)=>{
             if (!window.confirm('Czy napewno usunąć fakturę?')) {
                 return
@@ -70,16 +98,12 @@
                 let page =parseInt(params.get('page'));
                 await getInvoicesByPage(page);
             }
-            // const openCreateInvoice = () =>{
-            //     const dialog = document.querySelector('#createInvoice');
-            //     dialog.showModal();
-            // }
             return {
                 invoices,
                 pagination,
                 deleteInvoice,
                 getPage,
-                // openCreateInvoice
+              
             }
         }
     }
